@@ -131,17 +131,17 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
 [root@ip-172-31-15-123 centos]# getent hosts
 127.0.0.1       localhost localhost.localdomain localhost4 localhost4.localdomain4
 127.0.0.1       localhost localhost.localdomain localhost6 localhost6.localdomain6
-172.31.8.114    ip-172-31-8-114 ip-172-31-8-114.us-west-2.compute.internal master
-172.31.7.135    ip-172-31-7-135 ip-172-31-7-135.us-west-2.compute.internal master2
-172.31.5.59     ip-172-31-5-59 ip-172-31-5-59.us-west-2.compute.internal worker1
-172.31.2.15     ip-172-31-2-15 ip-172-31-2-15.us-west-2.compute.internal worker2
-172.31.15.123   ip-172-31-15-123 ip-172-31-15-123.us-west-2.compute.internal worker3
+172.31.8.114    ip-172-31-8-114.us-west-2.compute.internal ip-172-31-8-114 master
+172.31.7.135    ip-172-31-7-135.us-west-2.compute.internal ip-172-31-7-135 master2
+172.31.5.59     ip-172-31-5-59.us-west-2.compute.internal ip-172-31-5-59 worker1
+172.31.2.15     ip-172-31-2-15.us-west-2.compute.internal ip-172-31-2-15 worker2
+172.31.15.123   ip-172-31-15-123.us-west-2.compute.internal ip-172-31-15-123 worker3
 
 ## forward and reverse name resolving
-[root@ip-172-31-15-123 centos]# getent hosts 172.31.8.114
-172.31.8.114    ip-172-31-8-114 ip-172-31-8-114.us-west-2.compute.internal master
-[root@ip-172-31-15-123 centos]# getent hosts ip-172-31-8-114.us-west-2.compute.internal
-172.31.8.114    ip-172-31-8-114 ip-172-31-8-114.us-west-2.compute.internal master
+[vvaldevite@ip-172-31-8-114 ~]$ getent hosts 172.31.8.114
+172.31.8.114    ip-172-31-8-114.us-west-2.compute.internal ip-172-31-8-114 master
+[vvaldevite@ip-172-31-8-114 ~]$ getent hosts ip-172-31-8-114.us-west-2.compute.internal
+172.31.8.114    ip-172-31-8-114.us-west-2.compute.internal ip-172-31-8-114 master
 
 # NSCD status
 [root@ip-172-31-8-114 centos]# service nscd status
