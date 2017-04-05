@@ -1,13 +1,18 @@
 # Check Swapiness
 ## before
+```
 [centos@ip-172-31-7-135 ~]$ more /proc/sys/vm/swappiness
 30
+```
 ## after
+```
 [root@ip-172-31-7-135 centos]# echo 1 > /proc/sys/vm/swappiness
 [root@ip-172-31-7-135 centos]# more /proc/sys/vm/swappiness
 1
+```
 
 # Mount attributes
+```
 [root@ip-172-31-8-114 centos]# df -h
 Filesystem      Size  Used Avail Use% Mounted on
 /dev/xvda1       40G  1.4G   39G   4% /
@@ -16,17 +21,23 @@ tmpfs           7.2G     0  7.2G   0% /dev/shm
 tmpfs           7.2G   25M  7.2G   1% /run
 tmpfs           7.2G     0  7.2G   0% /sys/fs/cgroup
 tmpfs           1.5G     0  1.5G   0% /run/user/1000
+```
 
 # Hugepage
 ## before
+```
 [root@ip-172-31-15-123 centos]# cat /sys/kernel/mm/transparent_hugepage/enabled
 [always] madvise never
+```
 ## after
+```
 [root@ip-172-31-15-123 centos]# cat /sys/kernel/mm/transparent_hugepage/enabled
 always madvise [never]
+```
 
 # List network
 ## Master
+```
 [root@ip-172-31-8-114 centos]# ifconfig -a
 eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 9001
         inet 172.31.8.114  netmask 255.255.240.0  broadcast 172.31.15.255
@@ -45,8 +56,10 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 70  bytes 5984 (5.8 KiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
 
-## Standby Master
+## Standby 
+```
 [root@ip-172-31-7-135 centos]# ifconfig -a
 eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 9001
         inet 172.31.7.135  netmask 255.255.240.0  broadcast 172.31.15.255
@@ -65,8 +78,10 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 86  bytes 7564 (7.3 KiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
 
 ## Worker 1
+```
 [root@ip-172-31-5-59 centos]# ifconfig -a
 eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 9001
         inet 172.31.5.59  netmask 255.255.240.0  broadcast 172.31.15.255
@@ -85,8 +100,10 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 70  bytes 5984 (5.8 KiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
 
 ## Worker 2
+```
 [root@ip-172-31-2-15 centos]# ifconfig -a
 eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 9001
         inet 172.31.2.15  netmask 255.255.240.0  broadcast 172.31.15.255
@@ -105,8 +122,10 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 70  bytes 5984 (5.8 KiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
 
 ## Worker 3
+```
 [root@ip-172-31-15-123 centos]# ifconfig -a
 eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 9001
         inet 172.31.15.123  netmask 255.255.240.0  broadcast 172.31.15.255
@@ -125,9 +144,11 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 70  bytes 5984 (5.8 KiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
 
 # Name resolving
 ## /etc/hosts
+```
 [root@ip-172-31-15-123 centos]# getent hosts
 127.0.0.1       localhost localhost.localdomain localhost4 localhost4.localdomain4
 127.0.0.1       localhost localhost.localdomain localhost6 localhost6.localdomain6
@@ -136,14 +157,18 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
 172.31.5.59     ip-172-31-5-59.us-west-2.compute.internal ip-172-31-5-59 worker1
 172.31.2.15     ip-172-31-2-15.us-west-2.compute.internal ip-172-31-2-15 worker2
 172.31.15.123   ip-172-31-15-123.us-west-2.compute.internal ip-172-31-15-123 worker3
+```
 
 ## forward and reverse name resolving
+```
 [vvaldevite@ip-172-31-8-114 ~]$ getent hosts 172.31.8.114
 172.31.8.114    ip-172-31-8-114.us-west-2.compute.internal ip-172-31-8-114 master
 [vvaldevite@ip-172-31-8-114 ~]$ getent hosts ip-172-31-8-114.us-west-2.compute.internal
 172.31.8.114    ip-172-31-8-114.us-west-2.compute.internal ip-172-31-8-114 master
+```
 
 # NSCD status
+```
 [root@ip-172-31-8-114 centos]# service nscd status
 Redirecting to /bin/systemctl status  nscd.service
 ? nscd.service - Name Service Cache Daemon
@@ -165,8 +190,10 @@ Apr 03 17:16:12 ip-172-31-8-114 nscd[26009]: 26009 stat failed for file `/etc/ne
 Apr 03 17:16:12 ip-172-31-8-114 nscd[26009]: 26009 Access Vector Cache (AVC) started
 Apr 03 17:16:12 ip-172-31-8-114 systemd[1]: Started Name Service Cache Daemon.
 Hint: Some lines were ellipsized, use -l to show in full.
+```
 
 # NTPD status
+```
 [root@ip-172-31-8-114 centos]# service ntpd status
 Redirecting to /bin/systemctl status  ntpd.service
 ? ntpd.service - Network Time Service
@@ -188,48 +215,4 @@ Apr 03 17:18:16 ip-172-31-8-114 ntpd[26124]: 0.0.0.0 c016 06 restart
 Apr 03 17:18:16 ip-172-31-8-114 ntpd[26124]: 0.0.0.0 c012 02 freq_set kernel 0.000 PPM
 Apr 03 17:18:16 ip-172-31-8-114 ntpd[26124]: 0.0.0.0 c011 01 freq_not_set
 Hint: Some lines were ellipsized, use -l to show in full.
-
-# MariaDB Install
-
-## Status Banco
-[root@ip-172-31-8-114 centos]# service mariadb status
-Redirecting to /bin/systemctl status  mariadb.service
-? mariadb.service - MariaDB database server
-   Loaded: loaded (/usr/lib/systemd/system/mariadb.service; enabled; vendor preset: disabled)
-   Active: active (running) since Mon 2017-04-03 17:34:43 UTC; 4min 9s ago
-  Process: 26317 ExecStartPost=/usr/libexec/mariadb-wait-ready $MAINPID (code=exited, status=0/SUCCESS)
-  Process: 26239 ExecStartPre=/usr/libexec/mariadb-prepare-db-dir %n (code=exited, status=0/SUCCESS)
- Main PID: 26316 (mysqld_safe)
-   CGroup: /system.slice/mariadb.service
-           +-26316 /bin/sh /usr/bin/mysqld_safe --basedir=/usr
-           +-26710 /usr/libexec/mysqld --basedir=/usr --datadir=/var/lib/mysql --plugin-dir=/usr/l...
-
-Apr 03 17:34:33 ip-172-31-8-114 mariadb-prepare-db-dir[26239]: The latest information about Maria....
-Apr 03 17:34:33 ip-172-31-8-114 mariadb-prepare-db-dir[26239]: You can find additional informatio...:
-Apr 03 17:34:33 ip-172-31-8-114 mariadb-prepare-db-dir[26239]: http://dev.mysql.com
-Apr 03 17:34:33 ip-172-31-8-114 mariadb-prepare-db-dir[26239]: Support MariaDB development by buy...B
-Apr 03 17:34:33 ip-172-31-8-114 mariadb-prepare-db-dir[26239]: Corporation Ab. You can contact us....
-Apr 03 17:34:33 ip-172-31-8-114 mariadb-prepare-db-dir[26239]: Alternatively consider joining our...:
-Apr 03 17:34:33 ip-172-31-8-114 mariadb-prepare-db-dir[26239]: http://mariadb.com/kb/en/contribut.../
-Apr 03 17:34:34 ip-172-31-8-114 mysqld_safe[26316]: 170403 17:34:34 mysqld_safe Logging to '/var...'.
-Apr 03 17:34:34 ip-172-31-8-114 mysqld_safe[26316]: 170403 17:34:34 mysqld_safe Starting mysqld ...ql
-Apr 03 17:34:43 ip-172-31-8-114 systemd[1]: Started MariaDB database server.
-Hint: Some lines were ellipsized, use -l to show in full.
-
-## Created Databases
-MariaDB [(none)]> show databases;
-+--------------------+
-| Database           |
-+--------------------+
-| information_schema |
-| amon               |
-| metastore          |
-| mysql              |
-| nav                |
-| navms              |
-| oozie              |
-| performance_schema |
-| rman               |
-| sentry             |
-+--------------------+
-10 rows in set (0.00 sec)
+```
