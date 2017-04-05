@@ -13,13 +13,16 @@
 
 # Mount attributes
 ```
-[root@ip-172-31-8-114 centos]# df -h
+[centos@ip-172-31-5-59 hadoop-hdfs]$ df -h
 Filesystem      Size  Used Avail Use% Mounted on
-/dev/xvda1       40G  1.4G   39G   4% /
+/dev/xvda1       40G  7.0G   34G  18% /
 devtmpfs        7.3G     0  7.3G   0% /dev
 tmpfs           7.2G     0  7.2G   0% /dev/shm
 tmpfs           7.2G   25M  7.2G   1% /run
 tmpfs           7.2G     0  7.2G   0% /sys/fs/cgroup
+tmpfs           1.5G     0  1.5G   0% /run/user/0
+cm_processes    7.2G  3.6M  7.2G   1% /run/cloudera-scm-agent/process
+/dev/xvdb        40G   10G   31G  25% /data
 tmpfs           1.5G     0  1.5G   0% /run/user/1000
 ```
 
