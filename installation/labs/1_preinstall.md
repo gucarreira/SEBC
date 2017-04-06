@@ -164,10 +164,24 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
 
 ## forward and reverse name resolving
 ```
-[vvaldevite@ip-172-31-8-114 ~]$ getent hosts 172.31.8.114
-172.31.8.114    ip-172-31-8-114.us-west-2.compute.internal ip-172-31-8-114 master
-[vvaldevite@ip-172-31-8-114 ~]$ getent hosts ip-172-31-8-114.us-west-2.compute.internal
-172.31.8.114    ip-172-31-8-114.us-west-2.compute.internal ip-172-31-8-114 master
+[centos@ip-172-31-5-59 hadoop-hdfs]$ hostname -f
+ip-172-31-5-59.us-west-2.compute.internal
+[centos@ip-172-31-5-59 hadoop-hdfs]$ nslookup 172.31.5.59
+Server:         172.31.0.2
+Address:        172.31.0.2#53
+
+Non-authoritative answer:
+59.5.31.172.in-addr.arpa        name = ip-172-31-5-59.us-west-2.compute.internal.
+
+Authoritative answers can be found from:
+
+[centos@ip-172-31-5-59 hadoop-hdfs]$ nslookup ip-172-31-5-59.us-west-2.compute.internal
+Server:         172.31.0.2
+Address:        172.31.0.2#53
+
+Non-authoritative answer:
+Name:   ip-172-31-5-59.us-west-2.compute.internal
+Address: 172.31.5.59
 ```
 
 # NSCD status

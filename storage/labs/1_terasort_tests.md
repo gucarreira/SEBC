@@ -1,13 +1,18 @@
 # Teragen
 ## Command
+Considering that each line has 100 bytes of data, I am sending 100.000.000 lines to tergen.
+
+```
 time hadoop jar /opt/cloudera/parcels/CDH-5.10.1-1.cdh5.10.1.p0.10/jars/hadoop-examples.jar teragen \
 -Ddfs.blocksize=32M \
 -Ddfs.replication=1 \
 -Dmapreduce.job.maps=4 \
 100000000 \
 /user/vvaldevite/terasort-input > out.txt 2>&1
+```
 
 ## Execution time
+```
 [vvaldevite@ip-172-31-8-114 ~]$ time hadoop jar /opt/cloudera/parcels/CDH-5.10.1-1.cdh5.10.1.p0.10/jars/hadoop-examples.jar teragen \
 > -Ddfs.blocksize=32M \
 > -Ddfs.replication=1 \
@@ -18,8 +23,10 @@ time hadoop jar /opt/cloudera/parcels/CDH-5.10.1-1.cdh5.10.1.p0.10/jars/hadoop-e
 real    1m56.701s
 user    0m6.019s
 sys     0m0.296s
+```
 
 ## Output
+```
 17/04/04 14:16:50 INFO client.RMProxy: Connecting to ResourceManager at ip-172-31-8-114.us-west-2.compute.internal/172.31.8.114:8032
 17/04/04 14:16:50 INFO terasort.TeraGen: Generating 100000000 using 4
 17/04/04 14:16:50 INFO mapreduce.JobSubmitter: number of splits:4
@@ -84,8 +91,12 @@ sys     0m0.296s
                 Bytes Read=0
         File Output Format Counters
                 Bytes Written=10000000000
+```
 
 ## Generated Files
+Four files with 2.3 GB were created.
+
+```
 [vvaldevite@ip-172-31-8-114 ~]$ hdfs dfs -ls -h /user/vvaldevite/terasort-input
 Found 5 items
 -rw-r--r--   1 vvaldevite supergroup          0 2017-04-04 14:18 /user/vvaldevite/terasort-input/_SUCCESS
@@ -93,8 +104,12 @@ Found 5 items
 -rw-r--r--   1 vvaldevite supergroup      2.3 G 2017-04-04 14:18 /user/vvaldevite/terasort-input/part-m-00001
 -rw-r--r--   1 vvaldevite supergroup      2.3 G 2017-04-04 14:18 /user/vvaldevite/terasort-input/part-m-00002
 -rw-r--r--   1 vvaldevite supergroup      2.3 G 2017-04-04 14:18 /user/vvaldevite/terasort-input/part-m-00003
+```
 
 ## Block Sizes
+Just the last block does not have 32MB.
+
+```
 [hdfs@ip-172-31-8-114 centos]$ hadoop fsck /user/vvaldevite/terasort-input/part-m-00000 -files -blocks
 DEPRECATED: Use of this script to execute hdfs command is deprecated.
 Instead use the hdfs command for it.
@@ -198,20 +213,26 @@ FSCK ended at Tue Apr 04 14:25:46 UTC 2017 in 4 milliseconds
 
 
 The filesystem under path '/user/vvaldevite/terasort-input/part-m-00000' is HEALTHY
+```
 
 #Terasort
 
 ## Command
+```
 time hadoop jar /opt/cloudera/parcels/CDH-5.10.1-1.cdh5.10.1.p0.10/jars/hadoop-examples.jar terasort /user/vvaldevite/terasort-input /user/vvaldevite/terasort-output > out_sort.txt 2>&1
+```
 
 ## Execution Time
+```
 [vvaldevite@ip-172-31-8-114 ~]$ time hadoop jar /opt/cloudera/parcels/CDH-5.10.1-1.cdh5.10.1.p0.10/jars/hadoop-examples.jar terasort /user/vvaldevite/terasort-input /user/vvaldevite/terasort-output > out_sort.txt 2>&1
 
 real    8m54.522s
 user    0m8.790s
 sys     0m0.426s
+```
 
 ## Output
+```
 [vvaldevite@ip-172-31-8-114 ~]$ cat out_sort.txt
 17/04/04 14:31:43 INFO terasort.TeraSort: starting
 17/04/04 14:31:44 INFO input.FileInputFormat: Total input paths to process : 4
@@ -424,3 +445,4 @@ Spent 835ms computing partitions.
         File Output Format Counters
                 Bytes Written=10000000000
 17/04/04 14:40:36 INFO terasort.TeraSort: done
+```

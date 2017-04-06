@@ -1,6 +1,6 @@
 # Results
 ## 8 Mappers, 1 Reducer, from 512 to 1024
-
+```
 [hdfs@ip-172-31-8-114 tmp]$ sh YARNtest.sh
 Testing loop started on Tue Apr 4 19:35:01 UTC 2017
 
@@ -38,9 +38,10 @@ sys     0m0.367s
 Deleted /results/tg-10GB-8-1-1024
 Deleted /results/ts-10GB-8-1-1024
 Testing loop ended on Tue Apr 4 19:49:25 UTC 2017
+```
 
 ## 12 Mappers, 6 Reducers, from 2048 to 4096
-
+```
 [hdfs@ip-172-31-8-114 tmp]$ sh YARNtest.sh
 Testing loop started on Tue Apr 4 20:04:14 UTC 2017
 
@@ -78,6 +79,7 @@ sys     0m0.405s
 Deleted /results/tg-10GB-12-6-4096
 Deleted /results/ts-10GB-12-6-4096
 Testing loop ended on Tue Apr 4 20:16:43 UTC 2017
+```
 
 # Comments
 The best performance was actived with 12 mappers, 6 reducers and 1638 MB of memory. This is not the optimal configuration, since much more tests would be necessary to reach that conclusion.
