@@ -43,6 +43,78 @@ Error: Error while compiling statement: FAILED: SemanticException No valid privi
  The required privileges: Server=server1->Db=*->Table=+->Column=*->action=select;Server=server1->Db=*->Table=+->Column=*->action=insert; (state=42000,code=40000)
 ```
 
+## Grant priveleges for group vvaldevite
+```
+[vvaldevite@ip-172-31-8-114 ~]$ kinit hive
+Password for hive@HADOOP.LOCAL:
+[vvaldevite@ip-172-31-8-114 ~]$ beeline
+Beeline version 1.1.0-cdh5.10.1 by Apache Hive
+beeline> !connect jdbc:hive2://ip-172-31-8-114.us-west-2.compute.internal:10000/default;principal=hive/ip-172-31-8-114.us-west-2.compute.internal@HADOOP.LOCAL
+scan complete in 2ms
+Connecting to jdbc:hive2://ip-172-31-8-114.us-west-2.compute.internal:10000/default;principal=hive/ip-172-31-8-114.us-west-2.compute.internal@HADOOP.LOCAL
+Connected to: Apache Hive (version 1.1.0-cdh5.10.1)
+Driver: Hive JDBC (version 1.1.0-cdh5.10.1)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+****************
+I LOST THE CREATE ROLE sentry_admin; COMMAND
+****************
+0: jdbc:hive2://ip-172-31-8-114.us-west-2.com> GRANT ALL ON SERVER server1 TO ROLE sentry_admin;
+INFO  : Compiling command(queryId=hive_20170406123535_21a20fc5-d54f-45a1-9f53-3ee167d03128): GRANT ALL ON SERVER server1 TO ROLE sentry_admin
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20170406123535_21a20fc5-d54f-45a1-9f53-3ee167d03128); Time taken: 0.054 seconds
+INFO  : Executing command(queryId=hive_20170406123535_21a20fc5-d54f-45a1-9f53-3ee167d03128): GRANT ALL ON SERVER server1 TO ROLE sentry_admin
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20170406123535_21a20fc5-d54f-45a1-9f53-3ee167d03128); Time taken: 0.021 seconds
+INFO  : OK
+No rows affected (0.086 seconds)
+0: jdbc:hive2://ip-172-31-8-114.us-west-2.com> GRANT ROLE sentry_admin TO GROUP vvaldevite;
+INFO  : Compiling command(queryId=hive_20170406123535_45bfef22-a640-46e1-8684-22208ea71e70): GRANT ROLE sentry_admin TO GROUP vvaldevite
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20170406123535_45bfef22-a640-46e1-8684-22208ea71e70); Time taken: 0.054 seconds
+INFO  : Executing command(queryId=hive_20170406123535_45bfef22-a640-46e1-8684-22208ea71e70): GRANT ROLE sentry_admin TO GROUP vvaldevite
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20170406123535_45bfef22-a640-46e1-8684-22208ea71e70); Time taken: 0.02 seconds
+INFO  : OK
+No rows affected (0.085 seconds)
+```
+
+## Results of the grant for vvaldevite
+```
+[root@ip-172-31-8-114 centos]# kinit vvaldevite
+Password for vvaldevite@HADOOP.LOCAL:
+[root@ip-172-31-8-114 centos]# beeline
+Beeline version 1.1.0-cdh5.10.1 by Apache Hive
+beeline> !connect jdbc:hive2://ip-172-31-8-114.us-west-2.compute.internal:10000/default;principal=hive/ip-172-31-8-114.us-west-2.compute.internal@HADOOP.LOCAL
+scan complete in 2ms
+Connecting to jdbc:hive2://ip-172-31-8-114.us-west-2.compute.internal:10000/default;principal=hive/ip-172-31-8-114.us-west-2.compute.internal@HADOOP.LOCAL
+Connected to: Apache Hive (version 1.1.0-cdh5.10.1)
+Driver: Hive JDBC (version 1.1.0-cdh5.10.1)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://ip-172-31-8-114.us-west-2.com>
+0: jdbc:hive2://ip-172-31-8-114.us-west-2.com>
+0: jdbc:hive2://ip-172-31-8-114.us-west-2.com>
+0: jdbc:hive2://ip-172-31-8-114.us-west-2.com> show tables;
+INFO  : Compiling command(queryId=hive_20170406134545_9e3adafa-390c-481b-b23e-77a7cefa80fb): show tables
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:tab_name, type:string, comment:from deserializer)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20170406134545_9e3adafa-390c-481b-b23e-77a7cefa80fb); Time taken: 0.066 seconds
+INFO  : Executing command(queryId=hive_20170406134545_9e3adafa-390c-481b-b23e-77a7cefa80fb): show tables
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20170406134545_9e3adafa-390c-481b-b23e-77a7cefa80fb); Time taken: 0.14 seconds
+INFO  : OK
++------------+--+
+|  tab_name  |
++------------+--+
+| customers  |
+| sample_07  |
+| sample_08  |
+| web_logs   |
++------------+--+
+4 rows selected (0.308 seconds)
+```
+
 # User george, group selectors and role reads
 ```
 [root@ip-172-31-8-114 centos]# groupadd selector
