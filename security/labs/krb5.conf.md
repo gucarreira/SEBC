@@ -1,3 +1,4 @@
+```
 [libdefaults]
 default_realm = HADOOP.LOCAL
 dns_lookup_kdc = false
@@ -15,3 +16,4 @@ HADOOP.LOCAL = {
 kdc = ip-172-31-8-114.us-west-2.compute.internal
 admin_server = ip-172-31-8-114.us-west-2.compute.internal
 }
+```

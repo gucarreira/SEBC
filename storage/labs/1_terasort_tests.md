@@ -215,7 +215,7 @@ FSCK ended at Tue Apr 04 14:25:46 UTC 2017 in 4 milliseconds
 The filesystem under path '/user/vvaldevite/terasort-input/part-m-00000' is HEALTHY
 ```
 
-#Terasort
+# Terasort
 
 ## Command
 ```

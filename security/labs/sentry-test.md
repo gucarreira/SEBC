@@ -1,5 +1,5 @@
 # Verify user privileges
-Not enought privileges to use a database.
+Not enought privileges to use a database neither to show tables.
 ```
 [root@ip-172-31-8-114 centos]# beeline
 Beeline version 1.1.0-cdh5.10.1 by Apache Hive
